@@ -1,0 +1,36 @@
+/**
+ * This script is for publishing to GitHub Packages
+ */
+
+apply plugin: "maven-publish"
+
+println "Using GPR publish target: " + project.findProperty("gpr.repo")
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/" + project.findProperty("gpr.repo"))
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+                password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
+            }
+        }
+    }
+    publications {
+        classes(MavenPublication) {
+            from components.java
+            groupId project.group
+            artifactId project.name
+            version project.version
+            
+            // Try to include other JARs
+            if(project.tasks.findByName('srcJar')){
+                artifact project.tasks.srcJar
+            }
+            if(project.tasks.findByName('javadocJar')){
+                artifact project.tasks.javadocJar
+            }
+        }
+    }
+}

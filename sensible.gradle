@@ -1,0 +1,5 @@
+// A sensible list of scripts to load
+
+apply from: "gradle_scripts/srcjar.gradle"
+apply from: "gradle_scripts/javadoc.gradle"
+apply from: "gradle_scripts/github_packages.gradle"
