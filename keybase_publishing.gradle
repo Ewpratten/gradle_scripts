@@ -1,0 +1,28 @@
+/**
+ * This script is for publishing to Keybase
+ */
+
+apply plugin: "maven-publish"
+
+// Determine SNAPSHOT vs release
+def isRelease = !project.findProperty("version").contains("-SNAPSHOT")
+if (!isRelease) {
+    println "Detected SNAPSHOT"
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "KBFS"
+            if (isRelease) {
+                url = uri(
+                    project.findProperty("kbfs.maven.release") ?: "/keybase/public/ewpratten/maven/release"
+                )
+            } else {
+                url = uri(
+                    project.findProperty("kbfs.maven.snapshot") ?: "/keybase/public/ewpratten/maven/snapshot"
+                )
+            }
+        }
+    }
+}

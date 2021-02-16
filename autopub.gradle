@@ -1,0 +1,24 @@
+/**
+ * This script is for managing what artifacts are published
+ */
+
+apply plugin: "maven-publish"
+
+publishing {
+    publications {
+        classes(MavenPublication) {
+            from components.java
+            groupId project.group
+            artifactId project.name
+            version project.version
+            
+            // Try to include other JARs
+            if(project.tasks.findByName('srcJar')){
+                artifact project.tasks.srcJar
+            }
+            if(project.tasks.findByName('javadocJar')){
+                artifact project.tasks.javadocJar
+            }
+        }
+    }
+}

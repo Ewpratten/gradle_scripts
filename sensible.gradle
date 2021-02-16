@@ -2,5 +2,7 @@
 
 apply from: "gradle_scripts/srcjar.gradle"
 apply from: "gradle_scripts/javadoc.gradle"
+apply from: "gradle_scripts/keybase_publishing.gradle"
 apply from: "gradle_scripts/github_packages.gradle"
+apply from: "gradle_scripts/autopub.gradle"
 apply from: "gradle_scripts/tests_output.gradle"
